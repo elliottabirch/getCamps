@@ -9,6 +9,7 @@ const streamSessionsInDateRange = (_startDate, _endDate) => {
   const startDate = moment(_startDate);
   const endDate = moment(_endDate);
   return streamSeasons({ seasons: [] })
+  .doto(a => console.log(a)
     .pluck('sessionIds')
     .flatten()
     .collect()
