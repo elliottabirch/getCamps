@@ -1,7 +1,11 @@
-const appToken = process.env.APPTOKEN;
-const userName = process.env.USERNAME;
-const password = process.env.PASSWORD;
-const applicationName = process.env.APPLICATION_NAME;
+// const appToken = process.env.APPTOKEN;
+// const userName = process.env.USERNAME;
+// const password = process.env.PASSWORD;
+// const applicationName = process.env.APPLICATION_NAME;
+const appToken = 'SdEUeIpSkqVRgnnhll+m+dNnEEBWssJwkeREnBHQSJhd8YfPta6Qb3XeoVq0fk4F';
+const userName = 'abirch@adventurelinks.net';
+const password = 'Shogun02';
+const applicationName = 'AdventureLinksNorthernVirginia';
 
 const SOURCE_DIR = 'SOURCE';
 const OUTPUT_DIR = 'OUTPUT';

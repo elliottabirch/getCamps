@@ -179,7 +179,7 @@ lodash.get@~4.4.2:
   version "4.4.2"
   resolved "http://npm.ooapi.com:4873/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
 
-lodash@^4.13.1:
+lodash@^4.13.1, lodash@^4.17.10:
   version "4.17.10"
   resolved "http://npm.ooapi.com:4873/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 

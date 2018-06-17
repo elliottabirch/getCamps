@@ -1,26 +1,22 @@
-
 const {
   streamSessions,
   streamRegistrations,
   streamPeople,
   streamAnswers,
+  streamTuitions,
 } = require('../data');
 
 
 const streamSignInReport = sessionId => streamSessions({ sessionIds: [sessionId] })
-  .map(({
-    name: sessionName,
-    startDate: { day: startDay, month: startMonth, year: startYear },
-    endDate: { day: endDay, month: endMonth, year: endYear },
-  }) => ({
-    sessionName,
-    sessionStart: `${startMonth}/${startDay}/${startYear}`,
-    sessionEnd: `${endMonth}/${endDay}/${endYear}`,
-  }))
   .flatMap(session => streamRegistrations({ sessionIds: [sessionId] })
+    .filter(({ registrationDetails }) => !!registrationDetails)
     .pluck('registrationDetails')
     .flatten()
-    .map(({ personId }) => Object.assign({ personId }, session)))
+    .filter(({ cancelled }) => !cancelled)
+    .map(({ personId, tuitionId }) => Object.assign({ personId, tuitionId }, session)))
+  .map(session => streamTuitions({ tuitionIds: [session.tuitionId] })
+    .map(({ name: tuitionName }) => Object.assign({ tuitionName }, session)))
+  .mergeWithLimit(10)
   .map(session => streamPeople({ personIds: [session.personId] })
     .map(({ firstName, lastName }) => Object.assign({ firstName, lastName }, session)))
   .mergeWithLimit(10)
@@ -39,23 +35,27 @@ const streamSignInReport = sessionId => streamSessions({ sessionIds: [sessionId]
       }
       return accum;
     }, { canAdministerMedicine: '', unApproved: '', approved: {}, shirtSize: '' })
-    .map((data) => {
-      const approved = Object.values(data.approved)
-        .map(({ phoneNumber, fullName }) => `${fullName} - ${phoneNumber}`)
-        .join('/');
-      return Object.assign(data, { approved });
+    .map(({ approved, ...rest }) => {
+      const names = [];
+      const numbers = [];
+      Object.values(approved)
+        .forEach(({ phoneNumber, fullName }) => {
+          names.push(fullName);
+          numbers.push(phoneNumber);
+        });
+      const nameString = names.join('~');
+      const numberString = numbers.join('~');
+      return Object.assign(rest, { nameString, numberString });
     })
     .map(data => Object.assign({}, data, session)))
   .mergeWithLimit(10);
 
 
 const signInReportColumns = {
-  sessionName: 'Session Name',
-  sessionStart: 'Start Date',
-  sessionEnd: 'End Date',
   firstName: 'First Name',
   lastName: 'Last Name',
-  approved: 'Approved',
+  nameString: 'Names',
+  numberString: 'Numbers',
   sunIn: 'Sun - In',
   sunOut: 'Sun - Out',
   monIn: 'Mon - In',
