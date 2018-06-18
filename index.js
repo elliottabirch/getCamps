@@ -3,8 +3,10 @@ const { sendEmail } = require('./util');
 const CampPhotos = require('./reports/CampPhotos');
 
 
-exports.handler = ({ queryStringParameters = {} }, context, callback) => {
+exports.handler = (req, context, callback) => {
+  const { queryStringParameters = {} } = req;
   const { startDate, endDate } = queryStringParameters;
+  console.log(req);
   console.log('starting campPHotos with', startDate, endDate);
   CampPhotos(startDate, endDate)
     .through(stream => sendEmail(stream, 'Camp-Photos'))
