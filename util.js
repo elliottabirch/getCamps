@@ -15,6 +15,7 @@ const createUrl = (url, endPoint) => `${url}/${endPoint}`;
 const parseBuffer = stream => stream
   .collect()
   .map(buffers => buffers.join(''))
+  .doto(hl.log)
   .map(res => JSON.parse(res));
 
 const streamData = (query, endPoint) => {
