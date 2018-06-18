@@ -28,7 +28,7 @@ const streamData = (query, endPoint) => {
     .flatten();
 };
 
-const sendEmail = stream => stream
+const sendEmail = (stream, subject) => stream
   .collect()
   .flatMap((attachments) => {
     const transporter = nodemailer.createTransport({
@@ -46,7 +46,7 @@ const sendEmail = stream => stream
         'developer@adventurelinks.net',
         'elliottabirch@gmail.com',
       ],
-      subject: `Sign in sheets ${new Date()}`,
+      subject: `${subject}-${new Date()}`,
       attachments,
     };
     return hl((push) => {

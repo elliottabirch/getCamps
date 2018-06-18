@@ -3,14 +3,18 @@ const { sendEmail } = require('./util');
 const CampPhotos = require('./reports/CampPhotos');
 
 
-exports.handler = ({ queryStringParameters = {} }, context, callback) => {
+exports.handler = ({ queryStringParameters }, context, callback) => {
   const { startDate, endDate } = queryStringParameters;
-  console.log('starting campPHotos with', startDate, endDate);
   CampPhotos(startDate, endDate)
     .through(stream => sendEmail(stream, 'Camp-Photos'))
     .stopOnError(err => console.log(err))
-    .toArray((arr) => {
-      console.log('done', JSON.parse(arr));
-      callback(null, arr);
-    });
+    .toArray(arr => callback(null, arr));
 };
+
+
+exports.handler({
+  queryStringParameters: {
+    startDate: '2018-06-10',
+    endDate: '2018-06-20',
+  },
+}, {}, (err, data) => console.log(err, data));

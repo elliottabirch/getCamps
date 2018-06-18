@@ -1,6 +1,6 @@
 const moment = require('moment');
 
-const { endPoints: { product: { season, session, tuition }, registration: { info: registrationInfo }, person: { detail, answer } } } = require('../constants');
+const { endPoints: { product: { season, session, tuition, sessionOption }, registration: { info: registrationInfo }, person: { detail, answer } } } = require('../constants');
 const { streamData } = require('../util');
 
 const streamSeasons = query => streamData(query, season);
@@ -29,6 +29,7 @@ const streamRegistrations = query => streamData(query, registrationInfo);
 const streamPeople = query => streamData(query, detail);
 const streamAnswers = query => streamData(query, answer);
 const streamTuitions = query => streamData(query, tuition);
+const streamSessionOptions = query => streamData(query, sessionOption);
 
 module.exports = {
   streamSeasons,
@@ -38,6 +39,7 @@ module.exports = {
   streamPeople,
   streamAnswers,
   streamTuitions,
+  streamSessionOptions,
 };
 
 // streamSeasons({ seasons: [] })
