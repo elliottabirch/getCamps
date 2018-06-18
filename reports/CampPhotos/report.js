@@ -52,9 +52,9 @@ const streamCampPhotosReport = sessionId => streamRegistrations({ sessionIds: [s
 
 const campPhotosReportColumns = {
   sessionName: 'Camp Code',
+  numberPurchased: 'Number Purchased',
   emailsPurchased: 'Emails Who Purchased',
   emailsNotPurchased: 'Emails Who Did Not Purchased',
-  numberPurchased: 'Number Purchsed',
   price: 'Price Charged',
 };
 

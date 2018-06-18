@@ -3,6 +3,7 @@ const hl = require('highland');
 const request = require('request-promise');
 const nodemailer = require('nodemailer');
 
+const { mailerEmail, mailerPass } = require('./constants');
 
 const { endPoints: { base }, baseRequest, baseBody } = require('./constants');
 
@@ -29,24 +30,20 @@ const streamData = (query, endPoint) => {
     .flatten();
 };
 
-const sendEmail = (stream, subject) => stream
+const sendEmail = (stream, subject, to) => stream
   .collect()
   .flatMap((attachments) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'eng@adventurelinks.net',
-        pass: 'eng13220',
+        user: mailerEmail,
+        pass: mailerPass,
       },
     });
 
     const mailOptions = {
-      from: 'eng@adventurelinks.net',
-      to: [
-        'eng@adventurelinks.net',
-        'developer@adventurelinks.net',
-        'elliottabirch@gmail.com',
-      ],
+      from: mailerEmail,
+      to,
       subject: `${subject}-${new Date()}`,
       attachments,
     };

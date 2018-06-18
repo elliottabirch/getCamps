@@ -1,14 +1,16 @@
-// const appToken = process.env.APPTOKEN;
-// const userName = process.env.USERNAME;
-// const password = process.env.PASSWORD;
-// const applicationName = process.env.APPLICATION_NAME;
-const appToken = 'SdEUeIpSkqVRgnnhll+m+dNnEEBWssJwkeREnBHQSJhd8YfPta6Qb3XeoVq0fk4F';
-const userName = 'abirch@adventurelinks.net';
-const password = 'Shogun02';
-const applicationName = 'AdventureLinksNorthernVirginia';
+const appToken = process.env.APPTOKEN;
+const userName = process.env.USERNAME;
+const password = process.env.PASSWORD;
+const applicationName = process.env.APPLICATION_NAME;
+const mailerEmail = process.env.MAILER_EMAIL;
+const mailerPass = process.env.MAILER_PASS;
 
 const SOURCE_DIR = 'SOURCE';
 const OUTPUT_DIR = 'OUTPUT';
+
+const PHOTO_EMAIL_GROUP = ['photos@adventurelinks.net'];
+const CAMP_DOC_EMAIL_GROUP = ['camp@adventurelinks.net'];
+const DEV_EMAIL_GROUP = ['elliottabirch@gmail.com'];
 
 const baseBody = {
   appToken,
@@ -57,5 +59,10 @@ module.exports = {
   OUTPUT_DIR,
   endPoints,
   baseBody,
+  PHOTO_EMAIL_GROUP,
+  CAMP_DOC_EMAIL_GROUP,
+  DEV_EMAIL_GROUP,
   baseRequest,
+  mailerEmail,
+  mailerPass,
 };
