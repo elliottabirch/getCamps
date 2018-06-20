@@ -12,22 +12,60 @@ const {
   streamFamilies,
 } = require('./data');
 
+const formatParentData = ({ person }) => {
+  const {
+    firstName: primaryFirst,
+    lastName: primaryLast,
+    homePhoneNumber,
+    businessPhoneNumber,
+    cellPhoneNumber,
+  } = person || {};
+  const { phoneNumber: phomePN } = homePhoneNumber || {};
+  const { phoneNumber: pbizPN } = businessPhoneNumber || {};
+  const { phoneNumber: pcellPN } = cellPhoneNumber || {};
+  return { name: `${primaryFirst || ''} ${primaryLast || ''}`, number: `${phomePN ? `${phomePN}` : ''}${pbizPN ? ` / ${pbizPN}` : ''}${pcellPN ? ` / ${pcellPN}` : ''}` };
+};
+
 const formatSignInData = (data) => {
   const {
     person = {},
     answers = {},
-    tuition = { name: tuitionName },
+    tuition: { name: tuitionName },
     registrationDetail = {},
-    location: locationName,
+    location: { name: locationName },
     name: sessionName,
     startDate: { day: startDay, month: startMonth, year: startYear },
     endDate: { day: endDay, month: endMonth, year: endYear },
     family = [],
   } = data;
   const { firstName, lastName } = person;
+  const [primaryParent = {}] = family.filter(({ isPrimaryParent }) => isPrimaryParent === 'Yes');
+  const { name: primaryName, number: primaryNumber } = formatParentData(primaryParent);
+  const [secondaryParent = {}] = family.filter(({ isSecondaryParent }) => isSecondaryParent === 'Yes');
+  const { name: secondaryName, number: secondaryNumber } = formatParentData(secondaryParent);
+  const {
+    p1Name,
+    p1Number,
+    p2Name,
+    p2Number,
+    p3Name,
+    p3Number,
+  } = formatAnswers(answers);
   return {
+    campCode: `${tuitionName}`,
+    campName: `${sessionName} - ${locationName}`,
     firstName,
     lastName,
+    primaryName,
+    primaryNumber,
+    secondaryName,
+    secondaryNumber,
+    p1Name,
+    p1Number,
+    p2Name,
+    p2Number,
+    p3Name,
+    p3Number,
     sunIn,
     sunOut,
     monIn,
@@ -122,6 +160,10 @@ streamSeasons({ seasonIds: [] })
   .stopOnError(err => console.log(err))
   .done(() => console.log('done'));
 
+// campCode: 'Camp Code',
+// campName: 'Camp Name',
+// startDate: 'Start Date',
+// endDate: 'End Date',
 // firstName: 'First Name',
 // lastName: 'Last Name',
 // primaryName: 'Primary Parent Name',
