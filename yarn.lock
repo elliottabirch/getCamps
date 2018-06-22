@@ -111,6 +111,10 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "http://npm.ooapi.com:4873/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
 
+dotenv@^6.0.0:
+  version "6.0.0"
+  resolved "http://npm.ooapi.com:4873/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
+
 ecc-jsbn@~0.1.1:
   version "0.1.1"
   resolved "http://npm.ooapi.com:4873/ecc-jsbn/-/ecc-jsbn-0.1.1.tgz#0fc73a9ed5f0d53c38193398523ef7e543777505"
